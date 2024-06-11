@@ -47,6 +47,7 @@ jobs:
             rm -rf docker
             rm -rf scripts
             rm -rf autorunner
-            unzip autorunner.zip
+            unzip artifacts/autorunner.zip
             rm -rf autorunner.zip
+            ./scripts/daemon.sh
             
