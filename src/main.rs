@@ -38,7 +38,7 @@ pub fn run() {
                     latest_version.clone()
                 );
 
-                // return;
+                return;
             }
 
             println!("New version found: {}", latest_version.clone());
@@ -49,7 +49,7 @@ pub fn run() {
             // Destroy containers
             destroy_runners().await;
 
-            return;
+            // return;
             // Create containers
             create_runners().await;
 
