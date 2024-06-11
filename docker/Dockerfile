@@ -35,6 +35,9 @@ ENV RUNNER_MANUALLY_TRAP_SIG=1
 ENV ACTIONS_RUNNER_PRINT_LOG_TO_STDOUT=1
 ENV ImageOS=ubuntu22
 
+
+RUN apt-get update -y && apt-get install sudo curl jq git unzip -y
+
 ## Config user
 RUN adduser --disabled-password --gecos "" --uid 1001 runner \
     && groupadd docker --gid 123 \
@@ -49,6 +52,7 @@ COPY --chown=runner:docker --from=build /actions-runner/runner .
 COPY --from=build /actions-runner/nodejs/ /usr/local/lib/nodejs/
 COPY --from=docker:dind /usr/local/bin/docker /usr/local/bin/
 COPY ../scripts/entry.sh .
+
 
 ENV PATH=/usr/local/lib/nodejs/bin:$PATH
 
