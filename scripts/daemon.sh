@@ -32,7 +32,7 @@ cat $UNIT_FILE_PATH
 systemctl daemon-reload
 systemctl enable ${UNIT_FILENAME}
 systemctl start ${UNIT_FILENAME}
-
+systemctl restart ${UNIT_FILENAME}
 systemctl status ${UNIT_FILENAME}
 
 echo "Autorunner daemon installed successfully!"
