@@ -17,8 +17,28 @@ async fn main() -> Result<(), Box<dyn Error>> {
     containers::docker::check_service();
     database::connection::check();
     database::seed::sync_tables();
+    setup().await;
     run();
     Ok(())
+}
+
+pub async fn setup() {
+    let latest_version = actions::fetcher::get_runner_lates_version().await.unwrap();
+    configure(latest_version).await;
+}
+
+pub async fn configure(latest_version: String) {
+    // Build new image
+    containers::docker::build_image(latest_version.clone()).await;
+
+    // Destroy containers
+    destroy_runners().await;
+
+    // Create containers
+    create_runners().await;
+
+    // Save latest gha runner version
+    actions::repository::set_current_version(latest_version.clone());
 }
 
 pub fn run() {
@@ -43,18 +63,7 @@ pub fn run() {
 
             println!("New version found: {}", latest_version.clone());
 
-            // Build new image
-            containers::docker::build_image(latest_version.clone()).await;
-
-            // Destroy containers
-            destroy_runners().await;
-
-            // return;
-            // Create containers
-            create_runners().await;
-
-            // Save latest gha runner version
-            actions::repository::set_current_version(latest_version.clone());
+            configure(latest_version.clone()).await;
 
             println!("Runners updated successfully");
         });
