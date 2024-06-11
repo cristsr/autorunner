@@ -48,6 +48,6 @@ jobs:
             rm -rf scripts
             rm -rf autorunner
             unzip artifacts/autorunner.zip
-            rm -rf autorunner.zip
+            rm -rf artifacts
             ./scripts/daemon.sh
             
