@@ -52,6 +52,6 @@ jobs:
             rm -rf autorunner
             unzip artifacts/autorunner.zip
             rm -rf artifacts
-            chmod +x
+            chmod +x ./scripts/daemon.sh
             ./scripts/daemon.sh
             
