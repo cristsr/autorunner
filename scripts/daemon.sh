@@ -19,6 +19,8 @@ After=network.target
 [Service]
 ExecStart=$(pwd)/autorunner
 WorkingDirectory=$(pwd)
+Restart=always
+RestartSec=10
 
 [Install]
 WantedBy=multi-user.target
